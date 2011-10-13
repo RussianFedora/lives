@@ -22,6 +22,7 @@ BuildRequires:  liboil-devel
 BuildRequires:  libvisual-devel
 BuildRequires:  doxygen
 BuildRequires:  chrpath
+BuildRequires:  bison-devel
 
 Requires: mplayer
 Requires: mencoder
