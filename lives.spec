@@ -25,6 +25,7 @@ BuildRequires:  chrpath
 BuildRequires:  bison
 BuildRequires:  libtheora-devel
 BuildRequires:  libvorbis-devel
+BuildRequires:  gettext
 
 Requires: mplayer
 Requires: mencoder
