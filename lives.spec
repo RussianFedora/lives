@@ -30,12 +30,32 @@ Requires: mplayer
 Requires: mencoder
 Requires: sox
 Requires: ImageMagick
+Requires: weed
 
 %description
 LiVES began in 2002 as the Linux Video Editing System.
 Since it now runs on more operating systems: LiVES is a Video Editing System.
 It is designed to be simple to use, yet powerful.
 It is small in size, yet it has many advanced features.
+
+%package        doc
+Summary:        Doc files for LiVES
+Requires:       %{name}-%{version}
+
+%description doc
+Doc files for LiVES
+
+%package -n weed
+Summary:        weed library for LiVES
+
+%description -n weed
+weed library for LiVES
+
+%package -n weed-devel
+Summary:        headers for weed library
+
+%description -n weed-devel
+headers for weed library
 
 %prep
 %setup -q
@@ -62,17 +82,22 @@ find $RPM_BUILD_ROOT -name "*" -exec chrpath --delete {} \; 2>/dev/null
 %{_bindir}/midistop
 %{_bindir}/sendOSC
 %{_bindir}/smogrify
-%{_libdir}/libweed*
 %{_libdir}/%{name}
 %{_libdir}/pkgconfig/libweed*
 %{_datadir}/applications/LiVES.desktop
-#%{_defaultdocdir}/%{name}-%{version}*
 %{_datadir}/%{name}
+%exclude %{_defaultdocdir}/%{name}-%{version}
 %{_datadir}/pixmaps/%{name}.xpm
-%{_includedir}/weed/weed*.h
 
+%files doc
+%{_defaultdocdir}/%{name}-%{version}
 %doc COPYING README AUTHORS BUGS ChangeLog FEATURES
 
+%files -n weed
+%{_libdir}/libweed*
+
+%files -n weed-devel
+%{_includedir}/weed
 
 %changelog
 * Tue Sep 29 2011 Vasiliy N. Glazov <vascom2@gmail.com> - 1.4.6-1.R
