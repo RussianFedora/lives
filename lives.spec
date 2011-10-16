@@ -1,11 +1,12 @@
 Name:           lives
-Version:        1.4.6
-Release:        2%{?dist}.R
+Version:        1.4.7
+Release:        1%{?dist}.R
 Summary:        LiVES is a Video Editing System
 
 License:        GPLv3
 URL:            http://lives.sourceforge.net/
-Source0:        http://www.xs4all.nl/~salsaman/lives/current/LiVES-%{version}.tar.bz2
+Source0:        http://salsaman.home.xs4all.nl/lives/current/LiVES-%{version}.tar.bz2
+
 BuildRoot:      /{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  gtk2-devel
@@ -122,6 +123,9 @@ rm -rf %{buildroot}
 %{_libdir}/libweed*.so
 
 %changelog
+* Sun Oct 16 2011 Vasiliy N. Glazov <vascom2@gmail.com> - 1.4.7-1.R
+- Update to 1.4.7
+
 * Fri Oct 14 2011 Vasiliy N. Glazov <vascom2@gmail.com> - 1.4.6-2.R
 - Corrected spec for more robust builds
 
