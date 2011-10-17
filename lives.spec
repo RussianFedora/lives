@@ -1,11 +1,12 @@
 Name:           lives
 Version:        1.4.7
-Release:        1%{?dist}.R
+Release:        2%{?dist}.R
 Summary:        LiVES is a Video Editing System
 
 License:        GPLv3
 URL:            http://lives.sourceforge.net/
 Source0:        http://salsaman.home.xs4all.nl/lives/current/LiVES-%{version}.tar.bz2
+Patch1:         lives-compile.patch
 
 BuildRoot:      /{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -63,6 +64,7 @@ headers for weed library
 
 %prep
 %setup -q
+%patch1 -p1 -b .codec_media
 
 
 %build
@@ -77,7 +79,7 @@ rm %{buildroot}/%{_bindir}/%{name}
 %find_lang %{name}
 cd %{buildroot}/%{_bindir}/
 ln -s %{name}-exe %{name}
-rm -rf %{buildroot}/%{_libdir}/%{name}/plugins/effects/realtime/weed/*/.svn
+
 find %{buildroot} -name "*.a" -delete
 find %{buildroot} -name "*.la" -delete
 find %{buildroot} -name "*" -exec chrpath --delete {} \; 2>/dev/null
@@ -123,6 +125,9 @@ rm -rf %{buildroot}
 %{_libdir}/libweed*.so
 
 %changelog
+* Mon Oct 17 2011 Vasiliy N. Glazov <vascom2@gmail.com> - 1.4.7-2.R
+- Added patch to compile in F16
+
 * Sun Oct 16 2011 Vasiliy N. Glazov <vascom2@gmail.com> - 1.4.7-1.R
 - Update to 1.4.7
 
