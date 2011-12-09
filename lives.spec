@@ -1,12 +1,12 @@
 Name:           lives
-Version:        1.4.7
-Release:        2%{?dist}.R
+Version:        1.4.9
+Release:        1%{?dist}.R
 Summary:        LiVES is a Video Editing System
 
 License:        GPLv3
 URL:            http://lives.sourceforge.net/
 Source0:        http://salsaman.home.xs4all.nl/lives/current/LiVES-%{version}.tar.bz2
-Patch1:         lives-compile.patch
+Patch1:         lives-fix.patch
 
 BuildRoot:      /{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -29,12 +29,21 @@ BuildRequires:  bison
 BuildRequires:  libtheora-devel
 BuildRequires:  libvorbis-devel
 BuildRequires:  gettext
+BuildRequires:  schroedinger-devel
+BuildRequires:  x264-devel
+BuildRequires:  libpng-devel
+BuildRequires:  alsa-lib-devel
 
-Requires: mplayer
-Requires: mencoder
-Requires: sox
-Requires: ImageMagick
-Requires: weed
+Requires:   mplayer
+Requires:   mencoder
+Requires:   sox
+Requires:   ImageMagick
+Requires:   weed = %{version}
+Requires:   ogmtools
+Requires:   oggvideotools
+Requires:   perl
+Requires:   theora-tools
+Requires:   youtube-dl
 
 %description
 LiVES began in 2002 as the Linux Video Editing System.
@@ -53,18 +62,18 @@ Doc files for LiVES
 Summary:        weed library for LiVES
 
 %description -n weed
-weed library for LiVES
+Library weed for LiVES
 
 %package -n weed-devel
 Summary:        headers for weed library
 Requires:       weed = %{version}
 
 %description -n weed-devel
-headers for weed library
+Headers for weed library
 
 %prep
 %setup -q
-%patch1 -p1 -b .codec_media
+%patch1 -p1 -b .fix
 
 
 %build
@@ -80,9 +89,20 @@ rm %{buildroot}/%{_bindir}/%{name}
 cd %{buildroot}/%{_bindir}/
 ln -s %{name}-exe %{name}
 
-find %{buildroot} -name "*.a" -delete
-find %{buildroot} -name "*.la" -delete
 find %{buildroot} -name "*" -exec chrpath --delete {} \; 2>/dev/null
+
+find %{buildroot} -name "*.pc" \
+    | while read f ;
+    do
+        sed -i -e "s!libdir=\${exec_prefix}/lib!libdir=\${exec_prefix}/%{_lib}!" "$f" ;
+    done
+
+%ifarch x86_64
+    echo "#!/bin/bash" > %{buildroot}/%{_bindir}/lives
+    echo "export FREI0R_PATH=/usr/lib64/frei0r-1" >> %{buildroot}/%{_bindir}/lives
+    echo "lives-exe" >> %{buildroot}/%{_bindir}/lives
+    chmod +x %{buildroot}/%{_bindir}/lives
+%endif
 
 
 %clean
@@ -117,14 +137,22 @@ rm -rf %{buildroot}
 %defattr(-, root, root, -)
 %{_libdir}/libweed*
 %exclude %{_libdir}/libweed*.so
+%exclude %{_libdir}/libweed*a
 
 %files -n weed-devel
 %defattr(-, root, root, -)
 %{_includedir}/weed
 %{_libdir}/pkgconfig/libweed*
 %{_libdir}/libweed*.so
+%{_libdir}/libweed*a
 
 %changelog
+* Fri Dec 09 2011 Vasiliy N. Glazov <vascom2@gmail.com> - 1.4.9-1.R
+- Update to 1.4.9
+
+* Mon Nov 20 2011 Vasiliy N. Glazov <vascom2@gmail.com> - 1.4.7-3.R
+- Corrected libpath in .pc files
+
 * Mon Oct 17 2011 Vasiliy N. Glazov <vascom2@gmail.com> - 1.4.7-2.R
 - Added patch to compile in F16
 

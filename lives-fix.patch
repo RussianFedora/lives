@@ -1,0 +1,12 @@
+diff -uNdr lives-1.4.9/libweed/weed-compat.h lives-1.4.9_new/libweed/weed-compat.h
+--- lives-1.4.9/libweed/weed-compat.h	2011-12-08 09:33:03.000000000 +0400
++++ lives-1.4.9_new/libweed/weed-compat.h	2011-12-09 09:49:24.822311151 +0400
+@@ -290,7 +290,7 @@
+ 
+ 
+ #ifndef __WEED_PALETTES_H__
+-#include <weed/weed-palettes.h>
++#include "weed-palettes.h"
+ #endif
+ 
+ int avi_pix_fmt_to_weed_palette(enum PixelFormat pix_fmt, int *clamped) {
