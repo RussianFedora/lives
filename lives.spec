@@ -98,9 +98,10 @@ find %{buildroot} -name "*.pc" \
     done
 
 %ifarch x86_64
-    echo "#!/bin/bash" > %{buildroot}/%{_bindir}/lives
+    mv %{buildroot}/%{_bindir}/lives %{buildroot}/%{_bindir}/lives0
+    echo -e "#!/bin/bash\n" > %{buildroot}/%{_bindir}/lives
     echo "export FREI0R_PATH=/usr/lib64/frei0r-1" >> %{buildroot}/%{_bindir}/lives
-    echo "lives-exe" >> %{buildroot}/%{_bindir}/lives
+    echo -e "lives0\n" >> %{buildroot}/%{_bindir}/lives
     chmod +x %{buildroot}/%{_bindir}/lives
 %endif
 
