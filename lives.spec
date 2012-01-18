@@ -131,6 +131,7 @@ rm -rf %{buildroot}
 %{_datadir}/%{name}
 %exclude %{_defaultdocdir}/%{name}-%{version}
 %{_datadir}/pixmaps/%{name}.xpm
+%{_datadir}/app-install/icons/%{name}.png
 
 %files doc
 %defattr(-, root, root, -)
