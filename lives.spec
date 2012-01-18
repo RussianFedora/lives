@@ -1,12 +1,14 @@
 Name:           lives
-Version:        1.4.9
+Version:        1.6.0
 Release:        1%{?dist}.R
 Summary:        LiVES is a Video Editing System
+Summary(ru):    Система видеоредактирования LiVES
 
 License:        GPLv3
 URL:            http://lives.sourceforge.net/
 Source0:        http://salsaman.home.xs4all.nl/lives/current/LiVES-%{version}.tar.bz2
-Patch1:         lives-fix.patch
+Source100:      README.RFRemix
+#Patch1:         lives-fix.patch
 
 BuildRoot:      /{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -73,12 +75,13 @@ Headers for weed library
 
 %prep
 %setup -q
-%patch1 -p1 -b .fix
+#%patch1 -p1 -b .fix
 
 
 %build
 %configure
 make %{?_smp_mflags}
+cp %{SOURCE100} .
 
 
 %install
@@ -132,7 +135,7 @@ rm -rf %{buildroot}
 %files doc
 %defattr(-, root, root, -)
 %{_defaultdocdir}/%{name}-%{version}
-%doc COPYING README AUTHORS BUGS ChangeLog FEATURES
+%doc COPYING README AUTHORS BUGS ChangeLog FEATURES README.RFRemix
 
 %files -n weed
 %defattr(-, root, root, -)
@@ -148,6 +151,9 @@ rm -rf %{buildroot}
 %{_libdir}/libweed*a
 
 %changelog
+* Wed Jun 18 2012 Vasiliy N. Glazov <vascom2@gmail.com> - 1.6.0-1.R
+- update to 1.6.0
+
 * Fri Dec 09 2011 Vasiliy N. Glazov <vascom2@gmail.com> - 1.4.9-1.R
 - Update to 1.4.9
 
