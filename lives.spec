@@ -1,5 +1,5 @@
 Name:           lives
-Version:        1.6.0
+Version:        1.6.1
 Release:        1%{?dist}.R
 Summary:        LiVES is a Video Editing System
 Summary(ru):    Система видеоредактирования LiVES
@@ -152,6 +152,9 @@ rm -rf %{buildroot}
 %{_libdir}/libweed*a
 
 %changelog
+* Mon Feb 06 2012 Vasiliy N. Glazov <vascom2@gmail.com> - 1.6.1-1.R
+- update to 1.6.1
+
 * Wed Jun 18 2012 Vasiliy N. Glazov <vascom2@gmail.com> - 1.6.0-1.R
 - update to 1.6.0
 
