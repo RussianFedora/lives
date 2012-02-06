@@ -155,7 +155,7 @@ rm -rf %{buildroot}
 * Mon Feb 06 2012 Vasiliy N. Glazov <vascom2@gmail.com> - 1.6.1-1.R
 - update to 1.6.1
 
-* Wed Jun 18 2012 Vasiliy N. Glazov <vascom2@gmail.com> - 1.6.0-1.R
+* Wed Jan 18 2012 Vasiliy N. Glazov <vascom2@gmail.com> - 1.6.0-1.R
 - update to 1.6.0
 
 * Fri Dec 09 2011 Vasiliy N. Glazov <vascom2@gmail.com> - 1.4.9-1.R
