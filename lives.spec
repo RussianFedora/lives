@@ -1,6 +1,6 @@
 Name:           lives
 Version:        1.6.1
-Release:        1%{?dist}.R
+Release:        1%{?dist}
 Summary:        LiVES is a Video Editing System
 Summary(ru):    Система видеоредактирования LiVES
 
