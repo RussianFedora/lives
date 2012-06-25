@@ -1,5 +1,5 @@
 Name:           lives
-Version:        1.6.1
+Version:        1.6.2
 Release:        1%{?dist}
 Summary:        LiVES is a Video Editing System
 Summary(ru):    Система видеоредактирования LiVES
@@ -7,10 +7,7 @@ Summary(ru):    Система видеоредактирования LiVES
 License:        GPLv3
 URL:            http://lives.sourceforge.net/
 Source0:        http://salsaman.home.xs4all.nl/lives/current/LiVES-%{version}.tar.bz2
-Source100:      README.RFRemix
-#Patch1:         lives-fix.patch
 
-BuildRoot:      /{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  gtk2-devel
 BuildRequires:  jack-audio-connection-kit-devel
@@ -24,7 +21,7 @@ BuildRequires:  libavc1394-devel
 BuildRequires:  libv4l-devel
 BuildRequires:  frei0r-devel
 BuildRequires:  liboil-devel
-BuildRequires:  libvisual-devel
+#BuildRequires:  libvisual-devel
 BuildRequires:  doxygen
 BuildRequires:  chrpath
 BuildRequires:  bison
@@ -35,12 +32,13 @@ BuildRequires:  schroedinger-devel
 BuildRequires:  x264-devel
 BuildRequires:  libpng-devel
 BuildRequires:  alsa-lib-devel
+BuildRequires:  GLee-devel
 
 Requires:   mplayer
 Requires:   mencoder
 Requires:   sox
 Requires:   ImageMagick
-Requires:   weed = %{version}
+Requires:   weed%{?_isa} = %{version}-%{release}
 Requires:   ogmtools
 Requires:   oggvideotools
 Requires:   perl
@@ -55,7 +53,7 @@ It is small in size, yet it has many advanced features.
 
 %package        doc
 Summary:        Doc files for LiVES
-Requires:       %{name} = %{version}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description doc
 Doc files for LiVES
@@ -68,7 +66,7 @@ Library weed for LiVES
 
 %package -n weed-devel
 Summary:        headers for weed library
-Requires:       weed = %{version}
+Requires:       weed%{?_isa} = %{version}-%{release}
 
 %description -n weed-devel
 Headers for weed library
@@ -81,7 +79,6 @@ Headers for weed library
 %build
 %configure
 make %{?_smp_mflags}
-cp %{SOURCE100} .
 
 
 %install
@@ -107,6 +104,8 @@ find %{buildroot} -name "*.pc" \
     echo -e "lives0\n" >> %{buildroot}/%{_bindir}/lives
     chmod +x %{buildroot}/%{_bindir}/lives
 %endif
+find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
+find $RPM_BUILD_ROOT -name '*.a' -exec rm -f {} ';'
 
 
 %clean
@@ -136,22 +135,24 @@ rm -rf %{buildroot}
 %files doc
 %defattr(-, root, root, -)
 %{_defaultdocdir}/%{name}-%{version}
-%doc COPYING README AUTHORS BUGS ChangeLog FEATURES README.RFRemix
+%doc COPYING README AUTHORS BUGS ChangeLog FEATURES
 
 %files -n weed
 %defattr(-, root, root, -)
 %{_libdir}/libweed*
 %exclude %{_libdir}/libweed*.so
-%exclude %{_libdir}/libweed*a
 
 %files -n weed-devel
 %defattr(-, root, root, -)
 %{_includedir}/weed
 %{_libdir}/pkgconfig/libweed*
 %{_libdir}/libweed*.so
-%{_libdir}/libweed*a
+
 
 %changelog
+* Mon Jun 25 2012 Vasiliy N. Glazov <vascom2@gmail.com> - 1.6.2-1.R
+- update to 1.6.2
+
 * Mon Feb 06 2012 Vasiliy N. Glazov <vascom2@gmail.com> - 1.6.1-1.R
 - update to 1.6.1
 
