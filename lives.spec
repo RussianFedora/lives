@@ -33,6 +33,9 @@ BuildRequires:  x264-devel
 BuildRequires:  libpng-devel
 BuildRequires:  alsa-lib-devel
 BuildRequires:  GLee-devel
+BuildRequires:  opencv-devel
+BuildRequires:  bzip2-devel
+BuildRequires:  ladspa-devel
 
 Requires:   mplayer
 Requires:   mencoder
