@@ -132,7 +132,6 @@ find $RPM_BUILD_ROOT -name '*.a' -exec rm -f {} ';'
 %doc COPYING README AUTHORS BUGS ChangeLog FEATURES
 
 %files -n weed
-%defattr(-, root, root, -)
 %{_libdir}/libweed*
 %exclude %{_libdir}/libweed*.so
 
