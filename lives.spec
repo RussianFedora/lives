@@ -1,5 +1,5 @@
 Name:           lives
-Version:        1.6.2
+Version:        1.6.3
 Release:        1%{?dist}
 Summary:        LiVES is a Video Editing System
 Summary(ru):    Система видеоредактирования LiVES
@@ -108,10 +108,6 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 find $RPM_BUILD_ROOT -name '*.a' -exec rm -f {} ';'
 
 
-%clean
-rm -rf %{buildroot}
-
-
 %post -n weed -p /sbin/ldconfig
 
 
@@ -119,7 +115,6 @@ rm -rf %{buildroot}
 
 
 %files -f %{name}.lang
-%defattr(-, root, root, -)
 %{_bindir}/*%{name}*
 %{_bindir}/midistart
 %{_bindir}/midistop
@@ -133,7 +128,6 @@ rm -rf %{buildroot}
 %{_datadir}/app-install/icons/%{name}.png
 
 %files doc
-%defattr(-, root, root, -)
 %{_defaultdocdir}/%{name}-%{version}
 %doc COPYING README AUTHORS BUGS ChangeLog FEATURES
 
@@ -143,13 +137,15 @@ rm -rf %{buildroot}
 %exclude %{_libdir}/libweed*.so
 
 %files -n weed-devel
-%defattr(-, root, root, -)
 %{_includedir}/weed
 %{_libdir}/pkgconfig/libweed*
 %{_libdir}/libweed*.so
 
 
 %changelog
+* Thu Aug 16 2012 Vasiliy N. Glazov <vascom2@gmail.com> - 1.6.3-1.R
+- update to 1.6.3
+
 * Mon Jun 25 2012 Vasiliy N. Glazov <vascom2@gmail.com> - 1.6.2-1.R
 - update to 1.6.2
 
