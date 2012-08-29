@@ -7,6 +7,7 @@ Summary(ru):    Система видеоредактирования LiVES
 License:        GPLv3
 URL:            http://lives.sourceforge.net/
 Source0:        http://salsaman.home.xs4all.nl/lives/current/LiVES-%{version}.tar.bz2
+Patch0:         lives-f18-compile.patch
 
 
 BuildRequires:  gtk2-devel
@@ -77,6 +78,7 @@ Headers for weed library
 %prep
 %setup -q
 #%patch1 -p1 -b .fix
+%patch0 -p1 -b .f18-compile
 
 
 %build
