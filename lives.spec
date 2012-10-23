@@ -123,7 +123,7 @@ find $RPM_BUILD_ROOT -name '*.a' -exec rm -f {} ';'
 %{_bindir}/*%{name}*
 %{_bindir}/midistart
 %{_bindir}/midistop
-#%{_bindir}/sendOSC
+%{_bindir}/sendOSC
 %{_bindir}/smogrify
 %{_libdir}/%{name}
 %{_datadir}/applications/LiVES.desktop
