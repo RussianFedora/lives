@@ -1,5 +1,5 @@
 Name:           lives
-Version:        1.8.2
+Version:        2.0.2
 Release:        1%{?dist}
 Summary:        LiVES is a Video Editing System
 Summary(ru):    Система видеоредактирования LiVES
@@ -7,10 +7,9 @@ Summary(ru):    Система видеоредактирования LiVES
 License:        GPLv3
 URL:            http://lives.sourceforge.net/
 Source0:        http://salsaman.home.xs4all.nl/lives/current/LiVES-%{version}.tar.bz2
-#Patch0:         lives-f18-compile.patch
 
 
-BuildRequires:  gtk2-devel
+BuildRequires:  gtk3-devel
 BuildRequires:  jack-audio-connection-kit-devel
 BuildRequires:  SDL-devel
 BuildRequires:  pulseaudio-libs-devel
@@ -77,8 +76,6 @@ Headers for weed library
 
 %prep
 %setup -q
-#%patch1 -p1 -b .fix
-#%patch0 -p1 -b .f18-compile
 
 
 %build
@@ -147,6 +144,9 @@ find $RPM_BUILD_ROOT -name '*.a' -exec rm -f {} ';'
 
 
 %changelog
+* Mon Apr 08 2013 Vasiliy N. Glazov <vascom2@gmail.com> - 2.0.2-1.R
+- update to 2.0.2
+
 * Tue Jan 29 2013 Vasiliy N. Glazov <vascom2@gmail.com> - 1.8.2-1.R
 - update to 1.8.2
 
