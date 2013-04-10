@@ -1,5 +1,5 @@
 Name:           lives
-Version:        2.0.2
+Version:        2.0.3
 Release:        1%{?dist}
 Summary:        LiVES is a Video Editing System
 Summary(ru):    Система видеоредактирования LiVES
@@ -144,6 +144,9 @@ find $RPM_BUILD_ROOT -name '*.a' -exec rm -f {} ';'
 
 
 %changelog
+* Wed Apr 10 2013 Vasiliy N. Glazov <vascom2@gmail.com> - 2.0.3-1.R
+- update to 2.0.3
+
 * Mon Apr 08 2013 Vasiliy N. Glazov <vascom2@gmail.com> - 2.0.2-1.R
 - update to 2.0.2
 
