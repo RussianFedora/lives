@@ -1,5 +1,5 @@
 Name:           lives
-Version:        2.0.4
+Version:        2.0.5
 Release:        1%{?dist}
 Summary:        LiVES is a Video Editing System
 Summary(ru):    Система видеоредактирования LiVES
@@ -84,7 +84,6 @@ make %{?_smp_mflags}
 
 
 %install
-rm -rf %{buildroot}
 make install DESTDIR=%{buildroot}
 rm %{buildroot}/%{_bindir}/%{name}
 %find_lang %{name}
@@ -111,7 +110,6 @@ find $RPM_BUILD_ROOT -name '*.a' -exec rm -f {} ';'
 
 
 %post -n weed -p /sbin/ldconfig
-
 
 %postun -n weed -p /sbin/ldconfig
 
@@ -144,6 +142,9 @@ find $RPM_BUILD_ROOT -name '*.a' -exec rm -f {} ';'
 
 
 %changelog
+* Tue Jun 18 2013 Vasiliy N. Glazov <vascom2@gmail.com> - 2.0.5-1
+- Update to 2.0.5
+
 * Mon May 05 2013 Vasiliy N. Glazov <vascom2@gmail.com> - 2.0.4-1.R
 - update to 2.0.4
 
