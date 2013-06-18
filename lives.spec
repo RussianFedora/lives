@@ -105,8 +105,8 @@ find %{buildroot} -name "*.pc" \
     echo -e "lives0\n" >> %{buildroot}/%{_bindir}/lives
     chmod +x %{buildroot}/%{_bindir}/lives
 %endif
-find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
-find $RPM_BUILD_ROOT -name '*.a' -exec rm -f {} ';'
+find %{buildroot} -name '*.la' -exec rm -f {} ';'
+find %{buildroot} -name '*.a' -exec rm -f {} ';'
 
 
 %post -n weed -p /sbin/ldconfig
