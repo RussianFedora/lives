@@ -1,5 +1,5 @@
 Name:           lives
-Version:        2.0.5
+Version:        2.0.6
 Release:        1%{?dist}
 Summary:        LiVES is a Video Editing System
 Summary(ru):    Система видеоредактирования LiVES
@@ -36,6 +36,7 @@ BuildRequires:  GLee-devel
 BuildRequires:  opencv-devel
 BuildRequires:  bzip2-devel
 BuildRequires:  ladspa-devel
+BuildRequires:  fftw-devel
 
 Requires:   mplayer
 Requires:   mencoder
@@ -84,7 +85,7 @@ make %{?_smp_mflags}
 
 
 %install
-make install DESTDIR=%{buildroot}
+%make_install
 rm %{buildroot}/%{_bindir}/%{name}
 %find_lang %{name}
 cd %{buildroot}/%{_bindir}/
@@ -142,10 +143,13 @@ find %{buildroot} -name '*.a' -exec rm -f {} ';'
 
 
 %changelog
+* Sun Oct 13 2013 Vasiliy N. Glazov <vascom2@gmail.com> - 2.0.6-1
+- Update to 2.0.6
+
 * Tue Jun 18 2013 Vasiliy N. Glazov <vascom2@gmail.com> - 2.0.5-1
 - Update to 2.0.5
 
-* Mon May 05 2013 Vasiliy N. Glazov <vascom2@gmail.com> - 2.0.4-1.R
+* Sun May 05 2013 Vasiliy N. Glazov <vascom2@gmail.com> - 2.0.4-1.R
 - update to 2.0.4
 
 * Wed Apr 10 2013 Vasiliy N. Glazov <vascom2@gmail.com> - 2.0.3-1.R
@@ -181,7 +185,7 @@ find %{buildroot} -name '*.a' -exec rm -f {} ';'
 * Fri Dec 09 2011 Vasiliy N. Glazov <vascom2@gmail.com> - 1.4.9-1.R
 - Update to 1.4.9
 
-* Mon Nov 20 2011 Vasiliy N. Glazov <vascom2@gmail.com> - 1.4.7-3.R
+* Sun Nov 20 2011 Vasiliy N. Glazov <vascom2@gmail.com> - 1.4.7-3.R
 - Corrected libpath in .pc files
 
 * Mon Oct 17 2011 Vasiliy N. Glazov <vascom2@gmail.com> - 1.4.7-2.R
@@ -193,5 +197,5 @@ find %{buildroot} -name '*.a' -exec rm -f {} ';'
 * Fri Oct 14 2011 Vasiliy N. Glazov <vascom2@gmail.com> - 1.4.6-2.R
 - Corrected spec for more robust builds
 
-* Tue Sep 29 2011 Vasiliy N. Glazov <vascom2@gmail.com> - 1.4.6-1.R
+* Thu Sep 29 2011 Vasiliy N. Glazov <vascom2@gmail.com> - 1.4.6-1.R
 - Initial release
