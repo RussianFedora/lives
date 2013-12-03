@@ -1,5 +1,5 @@
 Name:           lives
-Version:        2.0.6
+Version:        2.2.0
 Release:        1%{?dist}
 Summary:        LiVES is a Video Editing System
 Summary(ru):    Система видеоредактирования LiVES
@@ -7,6 +7,7 @@ Summary(ru):    Система видеоредактирования LiVES
 License:        GPLv3
 URL:            http://lives.sourceforge.net/
 Source0:        http://salsaman.home.xs4all.nl/lives/current/LiVES-%{version}.tar.bz2
+#Patch0:         lives-f20.patch
 
 
 BuildRequires:  gtk3-devel
@@ -37,6 +38,7 @@ BuildRequires:  opencv-devel
 BuildRequires:  bzip2-devel
 BuildRequires:  ladspa-devel
 BuildRequires:  fftw-devel
+BuildRequires:  ffmpeg
 
 Requires:   mplayer
 Requires:   mencoder
@@ -77,9 +79,11 @@ Headers for weed library
 
 %prep
 %setup -q
+#%patch0 -p1 -b .f20
 
 
 %build
+ffmpeg -version
 %configure
 make %{?_smp_mflags}
 
@@ -143,6 +147,9 @@ find %{buildroot} -name '*.a' -exec rm -f {} ';'
 
 
 %changelog
+* Tue Dec 03 2013 Vasiliy N. Glazov <vascom2@gmail.com> - 2.2.0-1
+- Update to 2.2.0
+
 * Sun Oct 13 2013 Vasiliy N. Glazov <vascom2@gmail.com> - 2.0.6-1
 - Update to 2.0.6
 
