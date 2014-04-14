@@ -1,5 +1,5 @@
 Name:           lives
-Version:        2.2.2
+Version:        2.2.3
 Release:        1%{?dist}
 Summary:        LiVES is a Video Editing System
 Summary(ru):    Система видеоредактирования LiVES
@@ -79,11 +79,9 @@ Headers for weed library
 
 %prep
 %setup -q
-#%patch0 -p1 -b .f20
 
 
 %build
-ffmpeg -version
 %configure
 make %{?_smp_mflags}
 
@@ -147,6 +145,9 @@ find %{buildroot} -name '*.a' -exec rm -f {} ';'
 
 
 %changelog
+* Mon Apr 14 2014 Vasiliy N. Glazov <vascom2@gmail.com> - 2.2.3-1
+- Update to 2.2.3
+
 * Wed Dec 11 2013 Vasiliy N. Glazov <vascom2@gmail.com> - 2.2.2-1
 - Update to 2.2.2
 
