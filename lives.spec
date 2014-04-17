@@ -1,13 +1,13 @@
 Name:           lives
 Version:        2.2.3
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        LiVES is a Video Editing System
 Summary(ru):    Система видеоредактирования LiVES
 
 License:        GPLv3
 URL:            http://lives.sourceforge.net/
 Source0:        http://salsaman.home.xs4all.nl/lives/current/LiVES-%{version}.tar.bz2
-#Patch0:         lives-f20.patch
+Source1:        mpegts_decoder.c
 
 
 BuildRequires:  gtk3-devel
@@ -22,7 +22,6 @@ BuildRequires:  libavc1394-devel
 BuildRequires:  libv4l-devel
 BuildRequires:  frei0r-devel
 BuildRequires:  liboil-devel
-#BuildRequires:  libvisual-devel
 BuildRequires:  doxygen
 BuildRequires:  chrpath
 BuildRequires:  bison
@@ -79,6 +78,14 @@ Headers for weed library
 
 %prep
 %setup -q
+#Patching for 2.2.3
+for dec in mkv asf avformat flv
+do
+    sed -i -e "s/\#include \"${dec}_decoder.h\"/\#include \"libav_helper.2h\"/" lives-plugins/plugins/decoders/${dec}_decoder.c
+    sed -i -e "s/\#include \"libav_helper.h\"/\#include \"${dec}_decoder.h\"/" lives-plugins/plugins/decoders/${dec}_decoder.c
+    sed -i -e "s/\#include \"libav_helper.2h\"/\#include \"libav_helper.h\"/" lives-plugins/plugins/decoders/${dec}_decoder.c
+done
+cp %{SOURCE1} lives-plugins/plugins/decoders/mpegts_decoder.c
 
 
 %build
@@ -145,6 +152,9 @@ find %{buildroot} -name '*.a' -exec rm -f {} ';'
 
 
 %changelog
+* Thu Apr 17 2014 Vasiliy N. Glazov <vascom2@gmail.com> - 2.2.3-2
+- Patching for compile in F20, F21
+
 * Mon Apr 14 2014 Vasiliy N. Glazov <vascom2@gmail.com> - 2.2.3-1
 - Update to 2.2.3
 
