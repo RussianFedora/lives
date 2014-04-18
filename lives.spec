@@ -7,7 +7,7 @@ Summary(ru):    Система видеоредактирования LiVES
 License:        GPLv3
 URL:            http://lives.sourceforge.net/
 Source0:        http://salsaman.home.xs4all.nl/lives/current/LiVES-%{version}.tar.bz2
-Source1:        mpegts_decoder.c
+Patch0:         lives-decoders.patch
 
 
 BuildRequires:  gtk3-devel
@@ -79,13 +79,7 @@ Headers for weed library
 %prep
 %setup -q
 #Patching for 2.2.3
-for dec in mkv asf avformat flv
-do
-    sed -i -e "s/\#include \"${dec}_decoder.h\"/\#include \"libav_helper.2h\"/" lives-plugins/plugins/decoders/${dec}_decoder.c
-    sed -i -e "s/\#include \"libav_helper.h\"/\#include \"${dec}_decoder.h\"/" lives-plugins/plugins/decoders/${dec}_decoder.c
-    sed -i -e "s/\#include \"libav_helper.2h\"/\#include \"libav_helper.h\"/" lives-plugins/plugins/decoders/${dec}_decoder.c
-done
-cp %{SOURCE1} lives-plugins/plugins/decoders/mpegts_decoder.c
+%patch0 -p1 -b .decoders
 
 
 %build
@@ -152,7 +146,7 @@ find %{buildroot} -name '*.a' -exec rm -f {} ';'
 
 
 %changelog
-* Thu Apr 17 2014 Vasiliy N. Glazov <vascom2@gmail.com> - 2.2.3-2
+* Fri Apr 18 2014 Vasiliy N. Glazov <vascom2@gmail.com> - 2.2.3-2
 - Patching for compile in F20, F21
 
 * Mon Apr 14 2014 Vasiliy N. Glazov <vascom2@gmail.com> - 2.2.3-1
