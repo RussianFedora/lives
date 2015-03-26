@@ -1,6 +1,6 @@
 Name:           lives
 Version:        2.2.8
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        LiVES is a Video Editing System
 Summary(ru):    Система видеоредактирования LiVES
 
@@ -47,6 +47,8 @@ Requires:   oggvideotools
 Requires:   perl
 Requires:   theora-tools
 Requires:   youtube-dl
+Requires:   dvgrab
+Requires:   icedax
 
 %description
 LiVES began in 2002 as the Linux Video Editing System.
@@ -143,6 +145,9 @@ find %{buildroot} -name '*.a' -exec rm -f {} ';'
 
 
 %changelog
+* Thu Mar 26 2015 Vasiliy N. Glazov <vascom2@gmail.com> - 2.2.8-2
+- Add Requires vdgrab and cdda2wav
+
 * Mon Feb 09 2015 Vasiliy N. Glazov <vascom2@gmail.com> - 2.2.8-1
 - Update to 2.2.8
 
