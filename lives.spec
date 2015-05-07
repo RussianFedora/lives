@@ -1,6 +1,6 @@
 Name:           lives
-Version:        2.2.8
-Release:        2%{?dist}
+Version:        2.4.0
+Release:        1%{?dist}
 Summary:        LiVES is a Video Editing System
 Summary(ru):    Система видеоредактирования LiVES
 
@@ -56,6 +56,13 @@ Since it now runs on more operating systems: LiVES is a Video Editing System.
 It is designed to be simple to use, yet powerful.
 It is small in size, yet it has many advanced features.
 
+%package devel
+Summary:        headers for lives OSC library
+Requires:       lives%{?_isa} = %{version}-%{release}
+
+%description devel
+Headers for lives OSC library
+
 %package        doc
 Summary:        Doc files for LiVES
 Requires:       %{name}%{?_isa} = %{version}-%{release}
@@ -79,6 +86,11 @@ Headers for weed library
 %prep
 %setup -q
 
+#Trivial patch for gtk3 >= 3.16.0
+sed -i 's/gtk_label_set_y_align/gtk_label_set_yalign/' src/widget-helper.c
+#Workaround for GCC 5
+sed -i 's/LIVES_INLINE//' src/cvirtual.c
+
 
 %build
 %configure
@@ -86,8 +98,9 @@ make %{?_smp_mflags}
 
 
 %install
+mkdir -p %{buildroot}%{_bindir}
 %make_install
-rm %{buildroot}/%{_bindir}/%{name}
+rm %{buildroot}%{_bindir}/%{name}
 %find_lang %{name}
 cd %{buildroot}/%{_bindir}/
 ln -s %{name}-exe %{name}
@@ -110,6 +123,9 @@ find %{buildroot} -name "*.pc" \
 find %{buildroot} -name '*.la' -exec rm -f {} ';'
 find %{buildroot} -name '*.a' -exec rm -f {} ';'
 
+%post -p /sbin/ldconfig
+
+%postun -p /sbin/ldconfig
 
 %post -n weed -p /sbin/ldconfig
 
@@ -123,11 +139,16 @@ find %{buildroot} -name '*.a' -exec rm -f {} ';'
 %{_bindir}/sendOSC
 %{_bindir}/smogrify
 %{_libdir}/%{name}
+%{_libdir}/libOSC*
+%exclude %{_libdir}/libOSC*.so
 %{_datadir}/applications/LiVES.desktop
 %{_datadir}/%{name}
 %exclude %{_defaultdocdir}/%{name}-%{version}
 %{_datadir}/pixmaps/%{name}.xpm
 %{_datadir}/app-install/icons/%{name}.png
+
+%files devel
+%{_libdir}/libOSC*.so
 
 %files doc
 %{_defaultdocdir}/%{name}-%{version}
@@ -145,6 +166,9 @@ find %{buildroot} -name '*.a' -exec rm -f {} ';'
 
 
 %changelog
+* Thu May 07 2015 Vasiliy N. Glazov <vascom2@gmail.com> - 2.4.0-1
+- Update to 2.4.0
+
 * Thu Mar 26 2015 Vasiliy N. Glazov <vascom2@gmail.com> - 2.2.8-2
 - Add Requires vdgrab and cdda2wav
 
