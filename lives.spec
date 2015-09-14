@@ -1,5 +1,5 @@
 Name:           lives
-Version:        2.4.1
+Version:        2.4.2
 Release:        1%{?dist}
 Summary:        LiVES is a Video Editing System
 Summary(ru):    Система видеоредактирования LiVES
@@ -86,15 +86,10 @@ Headers for weed library
 %prep
 %setup -q
 
-#Trivial patch for gtk3 >= 3.16.0
-# sed -i 's/gtk_label_set_y_align/gtk_label_set_yalign/' src/widget-helper.c
-#Workaround for GCC 5
-# sed -i 's/LIVES_INLINE//' src/cvirtual.c
-
 
 %build
 %configure
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -166,6 +161,9 @@ find %{buildroot} -name '*.a' -exec rm -f {} ';'
 
 
 %changelog
+* Mon Sep 14 2015 Vasiliy N. Glazov <vascom2@gmail.com> - 2.4.2-1
+- Update to 2.4.2
+
 * Wed Aug 11 2015 Vasiliy N. Glazov <vascom2@gmail.com> - 2.4.1-1
 - Update to 2.4.1
 
