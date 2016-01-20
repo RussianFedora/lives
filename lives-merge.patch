@@ -1,0 +1,18 @@
+diff -uNdr lives-2.4.7_orig/smogrify lives-2.4.7_new/smogrify
+--- lives-2.4.7_orig/smogrify	2016-01-16 21:49:06.000000000 +0300
++++ lives-2.4.7_new/smogrify	2016-01-20 10:08:59.069504851 +0300
+@@ -3925,11 +3925,11 @@
+ 
+         if ($num_in_channels==2) {
+ # transitions get some extra params
+-            $img_ext2=".".$ARGV[8];
++            $img_ext2=".".$ARGV[7];
+             $img_prefix2=&get_img_prefix($img_ext2);
+             splice(@ARGV,7,1);
+-            $start2=$ARGV[9];
+-            $clipboard=$ARGV[10];
++            $start2=$ARGV[7];
+++            $clipboard=$ARGV[8];
+         }
+ 
+         $fps=0;
