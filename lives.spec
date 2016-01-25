@@ -1,13 +1,12 @@
 Name:           lives
-Version:        2.4.7
-Release:        2%{?dist}
+Version:        2.4.8
+Release:        1%{?dist}
 Summary:        LiVES is a Video Editing System
 Summary(ru):    Система видеоредактирования LiVES
 
 License:        GPLv3
 URL:            http://lives-video.com
 Source0:        http://lives-video.com/releases/LiVES-%{version}.tar.bz2
-Patch0:         lives-merge.patch
 
 BuildRequires:  gtk3-devel
 BuildRequires:  jack-audio-connection-kit-devel
@@ -163,6 +162,9 @@ find %{buildroot} -name '*.a' -exec rm -f {} ';'
 
 
 %changelog
+* Mon Jan 25 2016 Vasiliy N. Glazov <vascom2@gmail.com> - 2.4.8-1
+- Update to 2.4.8
+
 * Wed Jan 20 2016 Vasiliy N. Glazov <vascom2@gmail.com> - 2.4.7-2
 - Add patch fixes a hang in Merge in the Clip Editor
 
