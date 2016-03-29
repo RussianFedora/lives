@@ -1,5 +1,5 @@
 Name:           lives
-Version:        2.6.1
+Version:        2.6.2
 Release:        1%{?dist}
 Summary:        LiVES is a Video Editing System
 Summary(ru):    Система видеоредактирования LiVES
@@ -88,7 +88,7 @@ Headers for weed library
 
 
 %build
-%configure
+%configure --disable-rpath--disable-static
 %make_build
 
 
@@ -100,6 +100,7 @@ rm %{buildroot}%{_bindir}/%{name}
 cd %{buildroot}/%{_bindir}/
 ln -s %{name}-exe %{name}
 
+#https://sourceforge.net/p/lives/bugs/216/
 find %{buildroot} -name "*" -exec chrpath --delete {} \; 2>/dev/null
 
 find %{buildroot} -name "*.pc" \
@@ -115,6 +116,8 @@ find %{buildroot} -name "*.pc" \
     echo -e "lives0\n" >> %{buildroot}/%{_bindir}/lives
     chmod +x %{buildroot}/%{_bindir}/lives
 %endif
+
+#https://sourceforge.net/p/lives/bugs/215/
 find %{buildroot} -name '*.la' -exec rm -f {} ';'
 find %{buildroot} -name '*.a' -exec rm -f {} ';'
 
@@ -161,6 +164,9 @@ find %{buildroot} -name '*.a' -exec rm -f {} ';'
 
 
 %changelog
+* Tue Mar 29 2016 Vasiliy N. Glazov <vascom2@gmail.com> - 2.6.2-1
+- Update to 2.6.2
+
 * Mon Mar 28 2016 Vasiliy N. Glazov <vascom2@gmail.com> - 2.6.1-1
 - Update to 2.6.1
 
