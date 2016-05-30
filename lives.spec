@@ -1,5 +1,5 @@
 Name:           lives
-Version:        2.6.2
+Version:        2.6.3
 Release:        1%{?dist}
 Summary:        LiVES is a Video Editing System
 Summary(ru):    Система видеоредактирования LiVES
@@ -8,34 +8,33 @@ License:        GPLv3
 URL:            http://lives-video.com
 Source0:        http://lives-video.com/releases/LiVES-%{version}.tar.bz2
 
-BuildRequires:  gtk3-devel
-BuildRequires:  jack-audio-connection-kit-devel
-BuildRequires:  SDL-devel
-BuildRequires:  pulseaudio-libs-devel
-BuildRequires:  ffmpeg-devel
-BuildRequires:  libunicap-devel
-BuildRequires:  mjpegtools-devel
-BuildRequires:  libdv-devel
-BuildRequires:  libavc1394-devel
-BuildRequires:  libv4l-devel
-BuildRequires:  frei0r-devel
-BuildRequires:  liboil-devel
+BuildRequires:  pkgconfig(gtk+-3.0)
+BuildRequires:  pkgconfig(jack)
+BuildRequires:  pkgconfig(sdl)
+BuildRequires:  pkgconfig(libpulse)
+BuildRequires:  pkgconfig(libavcodec)
+BuildRequires:  pkgconfig(libunicap)
+BuildRequires:  pkgconfig(mjpegtools)
+BuildRequires:  pkgconfig(libdv)
+BuildRequires:  pkgconfig(libavc1394)
+BuildRequires:  pkgconfig(libv4l2)
+BuildRequires:  pkgconfig(frei0r)
+BuildRequires:  pkgconfig(liboil-0.3)
 BuildRequires:  doxygen
 BuildRequires:  chrpath
 BuildRequires:  bison
-BuildRequires:  libtheora-devel
-BuildRequires:  libvorbis-devel
+BuildRequires:  pkgconfig(theora)
+BuildRequires:  pkgconfig(vorbis)
 BuildRequires:  gettext
-BuildRequires:  schroedinger-devel
+BuildRequires:  pkgconfig(schroedinger-1.0)
 BuildRequires:  x264-devel
-BuildRequires:  libpng-devel
-BuildRequires:  alsa-lib-devel
+BuildRequires:  pkgconfig(libpng)
+BuildRequires:  pkgconfig(alsa)
 BuildRequires:  GLee-devel
-BuildRequires:  opencv-devel
-BuildRequires:  bzip2-devel
+BuildRequires:  pkgconfig(opencv)
+BuildRequires:  pkgconfig(bzip2)
 BuildRequires:  ladspa-devel
-BuildRequires:  fftw-devel
-BuildRequires:  ffmpeg
+BuildRequires:  pkgconfig(fftw3)
 
 Requires:   mplayer
 Requires:   mencoder
@@ -164,6 +163,9 @@ find %{buildroot} -name '*.a' -exec rm -f {} ';'
 
 
 %changelog
+* Mon May 30 2016 Vasiliy N. Glazov <vascom2@gmail.com> - 2.6.3-1
+- Update to 2.6.3
+
 * Tue Mar 29 2016 Vasiliy N. Glazov <vascom2@gmail.com> - 2.6.2-1
 - Update to 2.6.2
 
