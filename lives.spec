@@ -7,6 +7,7 @@ Summary(ru):    Система видеоредактирования LiVES
 License:        GPLv3
 URL:            http://lives-video.com
 Source0:        http://lives-video.com/releases/LiVES-%{version}.tar.bz2
+Patch0:		lives-2.6.3-ffmpeg3.patch
 
 BuildRequires:  pkgconfig(gtk+-3.0)
 BuildRequires:  pkgconfig(jack)
@@ -84,6 +85,7 @@ Headers for weed library
 
 %prep
 %setup -q
+%patch0 -p0 -b .ffmpeg3
 
 
 %build
