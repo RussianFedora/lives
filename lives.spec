@@ -37,6 +37,7 @@ BuildRequires:  pkgconfig(bzip2)
 BuildRequires:  ladspa-devel
 BuildRequires:  pkgconfig(fftw3)
 BuildRequires:  gettext-devel
+BuildRequires:  libtool
 
 Requires:   mplayer
 Requires:   mencoder
