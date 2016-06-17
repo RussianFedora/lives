@@ -89,6 +89,7 @@ Headers for weed library
 
 
 %build
+autoreconf -fi
 %configure --disable-rpath--disable-static
 %make_build
 
