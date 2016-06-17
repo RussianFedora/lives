@@ -36,6 +36,7 @@ BuildRequires:  pkgconfig(opencv)
 BuildRequires:  pkgconfig(bzip2)
 BuildRequires:  ladspa-devel
 BuildRequires:  pkgconfig(fftw3)
+BuildRequires:  gettext-devel
 
 Requires:   mplayer
 Requires:   mencoder
