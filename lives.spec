@@ -1,14 +1,14 @@
 Name:           lives
 Version:        2.6.4
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        LiVES is a Video Editing System
 Summary(ru):    Система видеоредактирования LiVES
 
 License:        GPLv3
 URL:            http://lives-video.com
 Source0:        http://lives-video.com/releases/LiVES-%{version}.tar.bz2
-#Source1:        https://sourceforge.net/p/lives/code/HEAD/tree/trunk/LiVES.appdata.xml
-Patch0:         lives-toonz.patch
+Patch0:		lives-2.6.3-ffmpeg3.patch
+Patch1:		lives-2.6.3-gcc6.patch
 
 BuildRequires:  pkgconfig(gtk+-3.0)
 BuildRequires:  pkgconfig(jack)
@@ -37,7 +37,8 @@ BuildRequires:  pkgconfig(opencv)
 BuildRequires:  pkgconfig(bzip2)
 BuildRequires:  ladspa-devel
 BuildRequires:  pkgconfig(fftw3)
-BuildRequires:  libappstream-glib
+BuildRequires:  gettext-devel
+BuildRequires:  libtool
 
 Requires:   mplayer
 Requires:   mencoder
@@ -87,10 +88,12 @@ Headers for weed library
 
 %prep
 %setup -q
-%patch0 -p1 -b .toonz
+%patch0 -p0 -b .ffmpeg3
+%patch1 -p0 -b .gcc6
 
 
 %build
+autoreconf -fi
 %configure --disable-rpath--disable-static
 %make_build
 
@@ -173,8 +176,8 @@ find %{buildroot} -name '*.a' -exec rm -f {} ';'
 
 
 %changelog
-* Mon Aug 08 2016 Vasiliy N. Glazov <vascom2@gmail.com> - 2.6.4-1
-- Update to 2.6.4
+* Tue Jun 14 2016 Arkady L. Shane <ashejn@russianfedora.pro> - 2.6.3-2.R
+- rebuilt against new ffmpeg
 
 * Mon May 30 2016 Vasiliy N. Glazov <vascom2@gmail.com> - 2.6.3-2
 - Added appdata XML

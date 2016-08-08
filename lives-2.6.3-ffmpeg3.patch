@@ -1,0 +1,80 @@
+Index: lives-plugins/plugins/decoders/libav_helper.h
+===================================================================
+--- lives-plugins/plugins/decoders/libav_helper.h	(revision 2530)
++++ lives-plugins/plugins/decoders/libav_helper.h	(revision 2531)
+@@ -62,8 +62,8 @@
+ 
+ 
+ #if !HAVE_AV_SET_PTS_INFO
+-#if HAVE_AVFORMAT_INTERNAL_H
+ 
++#if HAVE_AVFORMAT_INTERNAL_H && HAVE_AVPRIV_SET_PTS_INFO
+ #include <avformat/internal.h>
+ #define av_set_pts_info(a,b,c,d) avpriv_set_pts_info(a,b,c,d)
+ 
+@@ -77,7 +77,7 @@
+ 
+ 
+ 
+-static UNUSED void av_set_pts_info(AVStream *s, int pts_wrap_bits,
++static UNUSED void av_set_pts_info(AVStream *s, int pts_wrap_bits, 
+                                    unsigned int pts_num, unsigned int pts_den) {
+   AVRational new_tb;
+   if (av_reduce(&new_tb.num, &new_tb.den, pts_num, pts_den, INT_MAX)) {
+Index: lives-plugins/plugins/decoders/Makefile.am
+===================================================================
+--- lives-plugins/plugins/decoders/Makefile.am	(revision 2530)
++++ lives-plugins/plugins/decoders/Makefile.am	(revision 2531)
+@@ -78,10 +78,22 @@
+ libav_cflags += -DHAVE_AVCODEC_ALLOC_CONTEXT3=1
+ endif
+ 
++if HAVE_AV_CODEC_SET_PKT_TIMEBASE
++libav_cflags += -DHAVE_AV_CODEC_SET_PKT_TIMEBASE=1
++endif
++
+ if HAVE_AVFORMAT_NEW_STREAM
+ libav_cflags += -DHAVE_AVFORMAT_NEW_STREAM=1
+ endif
+ 
++if HAVE_AVPACKET_UNREF
++libav_cflags += -DHAVE_AVPACKET_UNREF=1
++endif
++
++if HAVE_AVFRAME_UNREF
++libav_cflags += -DHAVE_AVFRAME_UNREF=1
++endif
++
+ if HAVE_AVFORMAT_FIND_STREAM_INFO
+ libav_cflags += -DHAVE_AVFORMAT_FIND_STREAM_INFO=1
+ endif
+@@ -98,6 +110,12 @@
+ libav_cflags += -DHAVE_AV_SET_PTS_INFO=1
+ endif
+ 
++if HAVE_AVPRIV_SET_PTS_INFO
++libav_cflags += -DHAVE_AVPRIV_SET_PTS_INFO=1
++endif
++
++
++
+ flv_libs = flv_decoder.la
+ FLVDEC_LIBS = @LIBAVCODEC_LIBS@ @LIBAVFORMAT_LIBS@
+ FLVDEC_CFLAGS = @LIBAVFORMAT_CFLAGS@ @LIBAVCODEC_CFLAGS@ -Wno-deprecated-declarations
+Index: configure.ac
+===================================================================
+--- configure.ac	(revision 2530)
++++ configure.ac	(revision 2531)
+@@ -524,10 +524,12 @@
+ AM_CONDITIONAL(HAVE_AV_CODEC_SET_PKT_TIMEBASE,$HAVE_AV_CODEC_SET_PKT_TIMEBASE)
+ AM_CONDITIONAL(HAVE_AVFORMAT_NEW_STREAM,$HAVE_AVFORMAT_NEW_STREAM)
+ AM_CONDITIONAL(HAVE_AVPACKET_UNREF,$HAVE_AVPACKET_UNREF)
++AM_CONDITIONAL(HAVE_AVFRAME_UNREF,$HAVE_AVFRAME_UNREF)
+ AM_CONDITIONAL(HAVE_AVFORMAT_FIND_STREAM_INFO,$HAVE_AVFORMAT_FIND_STREAM_INFO)
+ AM_CONDITIONAL(HAVE_AVFORMAT_CLOSE_INPUT,$HAVE_AVFORMAT_CLOSE_INPUT)
+ AM_CONDITIONAL(HAVE_AVFORMAT_INTERNAL_H,$HAVE_AVFORMAT_INTERNAL_H)
+ AM_CONDITIONAL(HAVE_AV_SET_PTS_INFO,$HAVE_AV_SET_PTS_INFO)
++AM_CONDITIONAL(HAVE_AVPRIV_SET_PTS_INFO,$HAVE_AVPRIV_SET_PTS_INFO)
+ 
+ HAVE_OPENCV=false
+ 
