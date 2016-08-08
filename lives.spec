@@ -1,14 +1,14 @@
 Name:           lives
 Version:        2.6.4
-Release:        2%{?dist}
+Release:        1%{?dist}
 Summary:        LiVES is a Video Editing System
 Summary(ru):    Система видеоредактирования LiVES
 
 License:        GPLv3
 URL:            http://lives-video.com
 Source0:        http://lives-video.com/releases/LiVES-%{version}.tar.bz2
-Patch0:		lives-2.6.3-ffmpeg3.patch
-Patch1:		lives-2.6.3-gcc6.patch
+# Patch0:         lives-2.6.3-ffmpeg3.patch
+# Patch1:         lives-2.6.3-gcc6.patch
 
 BuildRequires:  pkgconfig(gtk+-3.0)
 BuildRequires:  pkgconfig(jack)
@@ -88,8 +88,8 @@ Headers for weed library
 
 %prep
 %setup -q
-%patch0 -p0 -b .ffmpeg3
-%patch1 -p0 -b .gcc6
+# %patch0 -p0 -b .ffmpeg3
+# %patch1 -p0 -b .gcc6
 
 
 %build
@@ -176,6 +176,9 @@ find %{buildroot} -name '*.a' -exec rm -f {} ';'
 
 
 %changelog
+* Mon Aug 08 2016 Vasiliy N. Glazov <vascom2@gmail.com> - 2.6.4-1
+- Update to 2.6.4
+
 * Tue Jun 14 2016 Arkady L. Shane <ashejn@russianfedora.pro> - 2.6.3-2.R
 - rebuilt against new ffmpeg
 
