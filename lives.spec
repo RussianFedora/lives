@@ -1,5 +1,5 @@
 Name:           lives
-Version:        2.6.3
+Version:        2.6.4
 Release:        1%{?dist}
 Summary:        LiVES is a Video Editing System
 Summary(ru):    Система видеоредактирования LiVES
@@ -7,6 +7,8 @@ Summary(ru):    Система видеоредактирования LiVES
 License:        GPLv3
 URL:            http://lives-video.com
 Source0:        http://lives-video.com/releases/LiVES-%{version}.tar.bz2
+#Source1:        https://sourceforge.net/p/lives/code/HEAD/tree/trunk/LiVES.appdata.xml
+Patch0:         lives-toonz.patch
 
 BuildRequires:  pkgconfig(gtk+-3.0)
 BuildRequires:  pkgconfig(jack)
@@ -35,6 +37,7 @@ BuildRequires:  pkgconfig(opencv)
 BuildRequires:  pkgconfig(bzip2)
 BuildRequires:  ladspa-devel
 BuildRequires:  pkgconfig(fftw3)
+BuildRequires:  libappstream-glib
 
 Requires:   mplayer
 Requires:   mencoder
@@ -84,6 +87,7 @@ Headers for weed library
 
 %prep
 %setup -q
+%patch0 -p1 -b .toonz
 
 
 %build
@@ -116,9 +120,15 @@ find %{buildroot} -name "*.pc" \
     chmod +x %{buildroot}/%{_bindir}/lives
 %endif
 
+# install -dm 755 %{buildroot}%{_datadir}/appdata/
+# install -m 644 -p %{SOURCE1} %{buildroot}%{_datadir}/appdata/LiVES.appdata.xml
+
 #https://sourceforge.net/p/lives/bugs/215/
 find %{buildroot} -name '*.la' -exec rm -f {} ';'
 find %{buildroot} -name '*.a' -exec rm -f {} ';'
+
+%check
+# appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/appdata/*.appdata.xml
 
 %post -p /sbin/ldconfig
 
@@ -163,7 +173,13 @@ find %{buildroot} -name '*.a' -exec rm -f {} ';'
 
 
 %changelog
-* Mon May 30 2016 Vasiliy N. Glazov <vascom2@gmail.com> - 2.6.3-1
+* Mon Aug 08 2016 Vasiliy N. Glazov <vascom2@gmail.com> - 2.6.4-1
+- Update to 2.6.4
+
+* Mon May 30 2016 Vasiliy N. Glazov <vascom2@gmail.com> - 2.6.3-2
+- Added appdata XML
+
+* Sun May 29 2016 Vasiliy N. Glazov <vascom2@gmail.com> - 2.6.3-1
 - Update to 2.6.3
 
 * Tue Mar 29 2016 Vasiliy N. Glazov <vascom2@gmail.com> - 2.6.2-1
