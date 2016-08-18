@@ -1,14 +1,12 @@
 Name:           lives
-Version:        2.6.4
+Version:        2.6.6
 Release:        1%{?dist}
-Summary:        LiVES is a Video Editing System
-Summary(ru):    Система видеоредактирования LiVES
+Summary:        A Video Editing System
+Summary(ru):    Система видеоредактирования
 
-License:        GPLv3
+License:        GPLv3+
 URL:            http://lives-video.com
 Source0:        http://lives-video.com/releases/LiVES-%{version}.tar.bz2
-# Patch0:         lives-2.6.3-ffmpeg3.patch
-# Patch1:         lives-2.6.3-gcc6.patch
 
 BuildRequires:  pkgconfig(gtk+-3.0)
 BuildRequires:  pkgconfig(jack)
@@ -33,12 +31,13 @@ BuildRequires:  x264-devel
 BuildRequires:  pkgconfig(libpng)
 BuildRequires:  pkgconfig(alsa)
 BuildRequires:  GLee-devel
-BuildRequires:  pkgconfig(opencv)
+# BuildRequires:  pkgconfig(opencv)
 BuildRequires:  pkgconfig(bzip2)
 BuildRequires:  ladspa-devel
 BuildRequires:  pkgconfig(fftw3)
 BuildRequires:  gettext-devel
 BuildRequires:  libtool
+BuildRequires:  desktop-file-utils
 
 Requires:   mplayer
 Requires:   mencoder
@@ -55,16 +54,9 @@ Requires:   icedax
 
 %description
 LiVES began in 2002 as the Linux Video Editing System.
-Since it now runs on more operating systems: LiVES is a Video Editing System.
+Since it now runs on more operating systems.
 It is designed to be simple to use, yet powerful.
 It is small in size, yet it has many advanced features.
-
-%package devel
-Summary:        headers for lives OSC library
-Requires:       lives%{?_isa} = %{version}-%{release}
-
-%description devel
-Headers for lives OSC library
 
 %package        doc
 Summary:        Doc files for LiVES
@@ -74,7 +66,7 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 Doc files for LiVES
 
 %package -n weed
-Summary:        weed library for LiVES
+Summary:        Library for LiVES
 
 %description -n weed
 Library weed for LiVES
@@ -87,14 +79,18 @@ Requires:       weed%{?_isa} = %{version}-%{release}
 Headers for weed library
 
 %prep
-%setup -q
-# %patch0 -p0 -b .ffmpeg3
-# %patch1 -p0 -b .gcc6
+%autosetup
+find lives-plugins/marcos-encoders -name "lives*" -exec \
+    sed -i -e 's|#!/usr/bin/env python|#!/usr/bin/python|' {} \;
+find lives-plugins/plugins/encoders -name "multi_encoder*" -exec \
+    sed -i -e 's|#!/usr/bin/env python|#!/usr/bin/python|' {} \;
 
+chmod -x lives-plugins/weed-plugins/bump2d.c
+chmod -x lives-plugins/weed-plugins/syna.h
 
 %build
 autoreconf -fi
-%configure --disable-rpath--disable-static
+%configure --disable-rpath --disable-static --disable-OSC
 %make_build
 
 
@@ -131,6 +127,7 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 find %{buildroot} -name '*.a' -exec rm -f {} ';'
 
 %check
+desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 # appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/appdata/*.appdata.xml
 
 %post -p /sbin/ldconfig
@@ -143,27 +140,18 @@ find %{buildroot} -name '*.a' -exec rm -f {} ';'
 
 
 %files -f %{name}.lang
-%{_bindir}/*%{name}*
-%{_bindir}/midistart
-%{_bindir}/midistop
-%{_bindir}/sendOSC
-%{_bindir}/smogrify
+%doc README AUTHORS BUGS ChangeLog FEATURES
+%license COPYING
+%{_bindir}/*
 %{_libdir}/%{name}
-%{_libdir}/libOSC*
-%exclude %{_libdir}/libOSC*.so
 %{_datadir}/applications/LiVES.desktop
 %{_datadir}/%{name}
 %exclude %{_defaultdocdir}/%{name}-%{version}
 %{_datadir}/pixmaps/%{name}.xpm
 %{_datadir}/app-install/icons/%{name}.png
 
-%files devel
-%{_libdir}/libOSC*.so
-
 %files doc
 %{_defaultdocdir}/%{name}-%{version}
-%doc README AUTHORS BUGS ChangeLog FEATURES
-%license COPYING
 
 %files -n weed
 %{_libdir}/libweed*
@@ -176,6 +164,9 @@ find %{buildroot} -name '*.a' -exec rm -f {} ';'
 
 
 %changelog
+* Thu Aug 18 2016 Vasiliy N. Glazov <vascom2@gmail.com> - 2.6.6-1
+- Update to 2.6.6
+
 * Mon Aug 08 2016 Vasiliy N. Glazov <vascom2@gmail.com> - 2.6.4-1
 - Update to 2.6.4
 
