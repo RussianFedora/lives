@@ -6,7 +6,7 @@ Summary(ru):    Система видеоредактирования
 
 License:        GPLv3+
 URL:            http://lives-video.com
-Source0:        http://lives-video.com/releases/LiVES-%{version}.tar.bz2
+Source0:        %{url}/releases/LiVES-%{version}.tar.bz2
 
 BuildRequires:  pkgconfig(gtk+-3.0)
 BuildRequires:  pkgconfig(jack)
@@ -31,7 +31,6 @@ BuildRequires:  x264-devel
 BuildRequires:  pkgconfig(libpng)
 BuildRequires:  pkgconfig(alsa)
 BuildRequires:  GLee-devel
-# BuildRequires:  pkgconfig(opencv)
 BuildRequires:  pkgconfig(bzip2)
 BuildRequires:  ladspa-devel
 BuildRequires:  pkgconfig(fftw3)
